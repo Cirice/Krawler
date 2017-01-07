@@ -1,0 +1,7 @@
+decorator==4.0.10
+requests==2.12.4
+requests-cache==0.4.13
+robotexclusionrulesparser==1.7.1
+six==1.10.0
+termcolor==1.1.0
+validators==0.11.0

@@ -78,7 +78,14 @@ celerybeat-schedule
 # dotenv
 .env
 
+# temp files
+*~
+.project/
+.idea/
+*#
+
 # virtualenv
+.venv/
 venv/
 ENV/
 
@@ -87,3 +94,4 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
