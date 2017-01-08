@@ -8,7 +8,7 @@ Project docs:
 ---
 	See inside docs/*
 
-Installin the depndencies:
+Installing the system-wide dependencies:
 ---
     $ bash system-dependencies.sh
     $ sudo pip3 install -U -r requirements.txt

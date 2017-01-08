@@ -22,15 +22,15 @@ requests_cache.install_cache('cache/download_cache.db')
 class BaseGrabber(object):
     """ Base Grabber Class """
 
-    USER_AGENT = (
-        "Bingbot",
-        "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)")
+    # many web servers will love you if you pretend to be a famous search engines's crawler!
+    USER_AGENT = ("Bingbot", "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)")
 
     HEADERS = {"User-Agent": USER_AGENT[1],
                "Accept": "*/*",
                "Accept-Encoding": "gzip, deflate",
                "Connection": "keep-alive"}
 
+    # only crawl in pages that are textual
     VALID_FILES = [
         "text/",
         "application/json",
@@ -41,9 +41,9 @@ class BaseGrabber(object):
         "application/xml"
     ]
 
-    READ_TIMEOUT = 30
-    CONNEXION_TIMEOUT = 30
-    SESSION = requests.Session()
+    READ_TIMEOUT = 30 # timeout for reading from server
+    CONNEXION_TIMEOUT = 30 # timeout for connecting to the server
+    SESSION = requests.Session() # keep the connection open to the server if possible
 
 
 class PageGrabber(BaseGrabber):
@@ -75,24 +75,19 @@ class PageGrabber(BaseGrabber):
                     self.HEADERS.ipdate({'referer': url.PARENT})
 
             # sending the actual request
-            response = func(
-                url=url.LINK,
-                headers=self.HEADERS,
-                stream=False,
-                verify=False,
-                timeout=(
-                    self.CONNEXION_TIMEOUT,
-                    self.READ_TIMEOUT))
+            response = func(url=url.LINK, headers=self.HEADERS,
+                stream=False, verify=False,
+                timeout=(self.CONNEXION_TIMEOUT, self.READ_TIMEOUT))
         except:
             if DEBUG:
                 print_stack_trace()
 
-            raise CrawlerException(
-                message="COULD NOT RETIEVE LINK'S DATA", code="102")
+            raise CrawlerException(message="COULD NOT RETIEVE LINK'S DATA", code="102")
 
         else:
             #print(response.status_code, response.headers, response.text)
-            # is url contents a html page?
+
+            #is url pointing to an html-like thing?
             body_type = self._has_valid_type(response.headers)
             if body_type:
                 return WebPage(text=response.text, link=response.url,
@@ -100,25 +95,15 @@ class PageGrabber(BaseGrabber):
                                status_code=response.status_code)
             elif body_type is None:
                 if VERBOSE >= 3:
-                    log_says(
-                        message="NO CONTENT-TYPE HEADER",
-                        log_type=WARN,
-                        agent="PageGrabber.get_page")
+                    log_says(message="NO CONTENT-TYPE HEADER",
+                        log_type=WARN, agent="PageGrabber.get_page")
 
-                raise CrawlerException(
-                    message="COULD NOT DETECT LINK'S BODY TYPE", code="100")
+                raise CrawlerException(message="COULD NOT DETECT LINK'S BODY TYPE", code="100")
 
             else:
                 if VERBOSE >= 3:
-                    log_says(
-                        message=(
-                            response.url +
-                            " (" +
-                            ColouredText.blue(
-                                response.headers['content-type']) +
-                            ")"),
-                        log_type=ERR,
-                        agent="PageGrabber")
+                    log_says(message=(response.url + " (" +
+                            ColouredText.blue(response.headers['content-type']) + ")"),
+                            log_type=ERR, agent="PageGrabber")
 
-                raise CrawlerException(
-                    message="LINK'S BODY DOES NOT HAVE A VALID TYPE", code="101")
+                raise CrawlerException(message="LINK'S BODY DOES NOT HAVE A VALID TYPE", code="101")
