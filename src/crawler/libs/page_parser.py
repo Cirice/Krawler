@@ -44,12 +44,17 @@ class HTMLParser(object):
             urls = set()
             html = BeautifulSoup(page.TEXT, "lxml")
 
+            # this part of needs imrovements; href can mean different meaning depending the context
             anchors = extract(html, tag="a")  # <a> .. </a>
             links = extract(html, tag="link")  # <link> .. </link>
+            area = extract(html, tag="area")  # <area> .. </area>
+            
             if anchors:
                 urls = urls | anchors  # joining urls with anchors
             if links:
                 urls = urls | links  # joining urls with links
+            if area:
+                urls = urls | area  # joining urls with area
         except:
             if DEBUG:
                 print_stack_trace()
