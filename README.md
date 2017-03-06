@@ -1,5 +1,7 @@
 #KRAWLER: A WEB CRAWLER IN PYTHON3
 
+[![GitHub issues]](https://github.com/habedi/Krawler/issues)    [![GitHub forks]] (https://github.com/habedi/Krawler/network)    [![GitHub stars]](https://github.com/habedi/Krawler/stargazers)
+
 Project Source code:
 ---
 	See inside src/*
