@@ -19,6 +19,6 @@ Starting the crawler:
 ---
 	$ pushd src; python3 main.py; popd
 
-
-
-![alt text](docs/figures//WebCrawlerArchitecture.svg "Webcrawler parts") 
+<center>
+![Web Search Engine](docs/figures//WebCrawlerArchitecture.png "Web Search Engine's Architecture") 
+</center>
