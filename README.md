@@ -19,4 +19,5 @@ Starting the crawler:
 ---
 	$ pushd src; python3 main.py; popd
 
-<center> ![alt text](docs/figures//WebCrawlerArchitecture.svg "API Details") </center>
+
+<center> ![alt text](docs/figures//WebCrawlerArchitecture.svg "Webcrawler parts") </center>
