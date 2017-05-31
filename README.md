@@ -1,4 +1,4 @@
-# KRAWLER: A WEB CRAWLER IN PYTHON3
+# KRAWLER: A WEB-CRAWLER IN PYTHON3
 
 It's a simple multithreaded web crawler wich downloads and stores web pages.
 

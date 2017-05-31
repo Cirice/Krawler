@@ -1,6 +1,7 @@
 import sys
 import json
 import queue
+
 import robotexclusionrulesparser as robotstxt
 
 from time import sleep
@@ -24,29 +25,49 @@ from .libs.internals.web_objects import URL
 
 class CrawlEngine(object):
     """ Crawler Class """
-
-    # pages's start url and domain plus other parameters
-    start_url = URL(link="https://www.researchgate.net", depth=0, parent=None) # starting url that crawling starts from
-    start_domain = "researchgate.net" # base domain; confine the crawler to search here
-    robotstxt_url = "https://www.researchgate.net/robots.txt" # robots.txt url
-    max_links = 1000 # max number of nodes being visited by the crawler
-    max_depth = 3 # max distance that could a visiting node have
-    max_failure_threshold = 4 # how many page grab can fail before giving up?
-    max_sleep_time = 6 # max sleep time if an error occurs while grabbing a page
-    visited_pages = set() # list of visited pages
-    missed_pages = set() # pages that could not be crawled
-    garbage_pages = set() # pages that should be ignores(not html or not-texual pages)
-    work_queue = queue.Queue() # crawler's work queue containig the pages to be visited
-    emails = list() # list of emals found in the pages
-    glock = Lock() # a lock to controll the treads
-    empty_queue_wait = 8 # if queue is empty how many seconds should the crawler wait before next try?
-    max_worker_threads = 16 # maximum number of working threads
-    thread_sleep_time = 0.1 # if now worker thread was available the how much shall the craller wait before retrying
-    max_empty_queue_threshold = 8 # if number of times that work queue is empty exceeds this number then break the loop
-    send_head_beforehand = True  # should the crawler send a HEAD before gabbing a page?
+ 
+    # if true then use parent link as referer
+    use_referer = True
+    # starting url that crawling starts from
+    start_url = URL(link="https://www.researchgate.net", depth=0, parent=None)
+    # base domain; confine the crawler to search here
+    start_domain = "researchgate.net"
+    # robots.txt url
+    robotstxt_url = "https://www.researchgate.net/robots.txt"
+    # max number of nodes being visited by the crawler
+    max_links = 1000
+    # max distance that could a visiting node have
+    max_depth = 3
+    # how many page grab can fail before giving up?
+    max_failure_threshold = 4
+    # max sleep time if an error occurs while grabbing a page
+    max_sleep_time = 6
+    # if queue is empty how many seconds should the crawler wait before next try?
+    empty_queue_wait = 8
+    # maximum number of working threads
+    max_worker_threads = 16
+    # if now worker thread was available the how much shall the craller wait before retrying
+    thread_sleep_time = 0.1
+    # if number of times that work queue is empty exceeds this number then break the loop
+    max_empty_queue_threshold = 8
+    # should the crawler send a HEAD before gabbing a page?
+    send_head_beforehand = True
+    # valid http return codes
     valid_response_codes = ["200", "301", "302", "999"]
-    pg = PageGrabber() # page grabber object used in crawling
-    use_referer = True # if true then use parent link as referer
+
+    ## private variables
+    # list of visited pages
+    visited_pages = set()
+    # pages that could not be crawled
+    missed_pages = set()
+    # pages that should be ignores(not html or not-texual pages)
+    garbage_pages = set()
+    # crawler's work queue containig the pages to be visited
+    work_queue = queue.Queue()
+    # a lock to controll the treads
+    glock = Lock()
+    # page grabber object used in crawling
+    pg = PageGrabber()
 
     def _get_robotstxt(self, robotstxt_url):
         try:

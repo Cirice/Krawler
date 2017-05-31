@@ -1,6 +1,5 @@
 import validators
 
-# importing BeautifulSoup
 try:
     from BeautifulSoup import BeautifulSoup
 except ImportError:
