@@ -17,7 +17,7 @@ Installing the system-wide dependencies:
     $ bash system-dependencies.sh
     $ sudo pip3 install -U -r requirements.txt
 
-Starting the crawler:
+Starting the programme:
 ---
 	$ pushd src; python3 main.py; popd
 	
