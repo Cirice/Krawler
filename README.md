@@ -21,4 +21,6 @@ Running the programme:
 ---
 	$ pushd src; python3 main.py; popd
 	
+<div align="center">
+
 ![Web Search Engine](docs/figures//WebCrawlerArchitecture.png "Web Search Engine's Architecture")
