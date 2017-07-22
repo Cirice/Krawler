@@ -38,7 +38,6 @@ class HTMLParser(object):
                 # adding the link into the list of found links
                 links.add(URL(link=url, depth=0, parent=parent_link))
             return links
-
         try:
             urls = set()
             html = BeautifulSoup(page.TEXT, "lxml")
