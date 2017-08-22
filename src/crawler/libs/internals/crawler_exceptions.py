@@ -1,4 +1,3 @@
-
 class CrawlerException(Exception):
     """ Custom Crawler Exception Class """
 
