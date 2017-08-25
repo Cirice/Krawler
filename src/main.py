@@ -13,7 +13,7 @@ def run():
     ce = CrawlEngine()
     ce.start()
 
-# running ...
+# running the code ...
 if __name__ == "__main__":
     with XTimer("MyTimer"):
         try:
