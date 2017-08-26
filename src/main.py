@@ -2,7 +2,7 @@ import sys
 
 from crawler.crawler import CrawlEngine
 
-# low level project imports
+## low level project imports
 from crawler.libs.internals.debug import print_stack_trace
 from crawler.libs.internals.custom_logger import ERR, log_says
 from crawler.libs.internals.flags import VERBOSE, DEBUG
