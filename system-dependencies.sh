@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 sudo apt-get install aptitude
 sudo aptitude update
